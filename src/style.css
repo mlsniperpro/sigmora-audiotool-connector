@@ -1,0 +1,132 @@
+:root {
+  --bg: #0e0f13;
+  --card: #16181f;
+  --line: #262a34;
+  --fg: #e8eaf0;
+  --dim: #8a90a2;
+  --accent: #6c5cff;
+  --ok: #38d39f;
+  --err: #ff6b6b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+#app { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+
+header h1 { font-size: 28px; margin: 0 0 4px; }
+header .dim, .dim { color: var(--dim); }
+.tagline { color: var(--dim); margin: 0 0 24px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 18px;
+}
+.hidden { display: none; }
+
+/* ElevenLabs product toggles on the release panel. */
+.options { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0; }
+.options label { display: inline-flex; align-items: center; gap: 6px; color: var(--dim); font-size: 13px; cursor: pointer; }
+.options input[type="checkbox"] { accent-color: var(--accent); }
+
+/* In-app project picker (replaces pasting a studio URL). */
+.pickrow { display: flex; gap: 8px; align-items: center; margin: 10px 0; }
+.pickrow select { flex: 1; min-width: 0; }
+select.wide, .pickrow select {
+  background: var(--card); color: var(--fg); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px 12px; font: inherit;
+}
+
+/* Inline media players — hear/see results in-app without downloading. */
+audio.player { display: block; width: 100%; height: 36px; margin: 6px 0 12px; }
+video.player { display: block; max-width: 100%; max-height: 340px; background: #000; border-radius: 10px; margin: 6px auto 12px; }
+
+/* Busy state — a spinner + label while an async action runs. */
+button.busy { opacity: 0.9; cursor: progress; }
+button.busy::before {
+  content: ''; display: inline-block; width: 11px; height: 11px; margin-right: 7px;
+  vertical-align: -1px; border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Reactive-bridge "session changed → regenerate" banner. */
+.banner { display: flex; align-items: center; gap: 12px; background: rgba(108, 92, 255, 0.12); border: 1px solid var(--accent); border-radius: 10px; padding: 10px 14px; margin: 10px 0; }
+.banner span { color: var(--fg); font-size: 14px; }
+
+h2 { font-size: 18px; margin: 0 0 4px; }
+h3 { margin: 0 0 6px; }
+h4 { margin: 18px 0 6px; color: var(--dim); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.cat {
+  font-size: 11px; color: var(--accent); border: 1px solid var(--accent);
+  border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: middle;
+}
+.meta { color: var(--dim); font-size: 13px; margin: 2px 0 12px; }
+.quote { border-left: 2px solid var(--accent); padding-left: 12px; color: #cdd2e0; }
+.tags { color: var(--accent); font-size: 13px; }
+
+input.wide { width: 100%; }
+input {
+  background: #0c0d11; border: 1px solid var(--line); color: var(--fg);
+  border-radius: 9px; padding: 10px 12px; margin: 6px 0 10px; font-size: 14px;
+}
+
+button {
+  font: inherit; cursor: pointer; border-radius: 9px; padding: 9px 16px;
+  border: 1px solid var(--line); background: #1d2029; color: var(--fg);
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.ghost { background: transparent; }
+button.seed { margin-top: 8px; }
+button:disabled { opacity: 0.5; cursor: progress; }
+
+hr { border: none; border-top: 1px solid var(--line); margin: 24px 0; }
+
+.who { display: flex; align-items: center; gap: 12px; }
+.badge { color: var(--ok); font-size: 13px; }
+
+.platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.platform { background: #0c0d11; border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.platform strong { color: var(--accent); text-transform: capitalize; }
+.platform p { margin: 6px 0 0; font-size: 13px; }
+
+.concepts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.concept { background: #0c0d11; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+
+.kit ul { padding-left: 18px; }
+
+.el-products { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 8px; }
+.badge.el {
+  color: #0a0a0f; background: var(--accent); border-radius: 999px;
+  padding: 3px 10px; font-size: 12px; font-weight: 600;
+}
+.presave {
+  background: #0c0d11; border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px; margin-top: 4px;
+}
+.presave .presave-cta { margin-top: 10px; }
+
+.ok { color: var(--ok); }
+.error, .err { color: var(--err); }
+a { color: var(--accent); word-break: break-all; }
+
+.log-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin: 24px 0 6px; }
+.log {
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 14px; font: 12px/1.6 ui-sans-serif, system-ui, sans-serif; color: var(--dim);
+  max-height: 160px; overflow: auto; white-space: pre-wrap; margin: 0;
+}
+
+@media (max-width: 640px) {
+  .platforms, .concepts { grid-template-columns: 1fr; }
+}
