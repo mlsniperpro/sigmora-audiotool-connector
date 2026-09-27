@@ -6,7 +6,43 @@ based on their real audience (cat 01), and gets the finished track **heard** onc
 they've made it (cat 06) — all bridged **live via Nexus** (cat 05), without leaving
 the session.
 
-> Built on `@audiotool/nexus@0.0.17`. Demo on `beta.audiotool.com`.
+> Built on `@audiotool/nexus@0.0.19`. Apache-2.0.
+
+## What this repo is (and isn't)
+
+This is a **starter kit for other builders**: a small, standalone Vite app that
+shows the whole Nexus loop (OAuth PKCE, read a session, seed a project, write
+markers back) against a backend. Fork it and build on it.
+
+The live product at **https://sigmora.org** does not run this app. It embeds the
+same Nexus integration directly in the Sigmora dashboard (Song Starter and
+Release live inside a project), with a server-held session so an artist
+connects Audiotool **once** and stays connected across browsers, devices and
+workspaces. That code lives in the private Sigmora monorepo; the lessons are
+below so you don't have to learn them the hard way.
+
+## Lessons from running Nexus in production
+
+- **One holder per refresh token.** Audiotool rotates refresh tokens. If the
+  browser SDK and your server both keep and refresh the same token family,
+  whichever refreshes first strands the other and your users get asked to
+  connect again. Capture the tokens once, let the server be the only party that
+  refreshes (serialize it with a lease), and hand the browser access tokens
+  only.
+- **`?error=` in your page URL logs the SDK out.** `audiotool()` treats any
+  `error` query parameter as an OAuth failure and clears its stored session. Keep
+  a server copy you can restore from, or keep that parameter off pages that
+  mount the SDK.
+- **`localhost` is rejected as a redirect URI.** Use `http://127.0.0.1:<port>`
+  and register the exact callback URL, trailing slash included.
+- **Register every origin you redirect from.** If `www.` redirects to the apex,
+  the redirect URI the browser sends is the apex one.
+- **Access tokens are long-lived, but refresh early anyway.** Refreshing a few
+  days before expiry keeps the token family renewing while the artist is
+  active.
+- **0.0.18+ tolerates unknown document fields.** 0.0.17 threw on any project
+  field it didn't know, so projects saved by a newer studio could fail to read.
+  Stay current.
 
 ## What it does
 
